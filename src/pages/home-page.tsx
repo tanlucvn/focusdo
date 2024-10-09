@@ -1,3 +1,4 @@
+import AppMenu from "@/components/app-menu";
 import AppTabs from "@/components/app-tabs";
 
 export default function HomePage() {
@@ -14,6 +15,8 @@ export default function HomePage() {
         </div>
       </div>
       <div className="z-[1] flex size-full max-w-xl flex-col items-center justify-end gap-1 px-2 sm:justify-center">
+        <AppMenu />
+
         <div className="container flex h-[90dvh] max-w-xl flex-col rounded-t-[30px] bg-background px-5 pt-5 sm:rounded-[30px]">
           <AppTabs />
         </div>
