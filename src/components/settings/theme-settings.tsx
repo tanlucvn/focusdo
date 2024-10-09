@@ -1,4 +1,4 @@
-import ToggleTheme from "../theme-toggle";
+import ToggleTheme from "../theme-toggle"
 
 const ThemeSettings = () => {
   return (
@@ -7,7 +7,7 @@ const ThemeSettings = () => {
         <ToggleTheme />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ThemeSettings;
+export default ThemeSettings

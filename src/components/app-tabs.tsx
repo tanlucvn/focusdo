@@ -1,5 +1,6 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LayoutList, ListChecks, PieChartIcon, TrashIcon } from "lucide-react";
+import { LayoutList, ListChecks, PieChartIcon, TrashIcon } from "lucide-react"
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const AppTabs = () => {
   return (
@@ -31,7 +32,7 @@ const AppTabs = () => {
         </TabsContent>
       </TabsList>
     </Tabs>
-  );
-};
+  )
+}
 
-export default AppTabs;
+export default AppTabs

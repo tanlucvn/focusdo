@@ -1,8 +1,9 @@
-"use client";
+"use client"
 
-import React from "react";
-import { motion } from "framer-motion";
-import AppLogo from "./app-logo";
+import React from "react"
+import { motion } from "framer-motion"
+
+import AppLogo from "./app-logo"
 
 export default function AppHeader() {
   return (
@@ -20,5 +21,5 @@ export default function AppHeader() {
         </span>
       </div>
     </motion.div>
-  );
+  )
 }

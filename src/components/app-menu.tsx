@@ -1,23 +1,25 @@
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { appVersion, iconSize } from "@/lib/constants";
-import {
   ArrowUpRightIcon,
   MenuIcon,
   PaletteIcon,
   StickyNoteIcon,
   TrashIcon,
-} from "lucide-react";
-import AppLogo from "./app-logo";
-import ThemeSettings from "./settings/theme-settings";
-import AppHeader from "./app-header";
+} from "lucide-react"
+
+import { appVersion, iconSize } from "@/lib/constants"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { ScrollArea } from "@/components/ui/scroll-area"
+
+import AppHeader from "./app-header"
+import AppLogo from "./app-logo"
+import ThemeSettings from "./settings/theme-settings"
 
 const Menu = () => {
   return (
@@ -81,7 +83,7 @@ const Menu = () => {
         </DialogContent>
       </Dialog>
     </div>
-  );
-};
+  )
+}
 
-export default Menu;
+export default Menu

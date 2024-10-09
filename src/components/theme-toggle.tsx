@@ -1,5 +1,10 @@
-"use client";
+"use client"
 
+import { useEffect, useState } from "react"
+import { Monitor, Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
+
+import { Theme } from "@/lib/types"
 import {
   Select,
   SelectContent,
@@ -7,27 +12,23 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Theme } from "@/lib/types";
-import { Monitor, Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+} from "@/components/ui/select"
 
 export default function ThemeToggle() {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
   if (!mounted) {
-    return null;
+    return null
   }
 
   const handleThemeChange = (theme: string) => {
-    setTheme(theme as Theme);
-  };
+    setTheme(theme as Theme)
+  }
 
   return (
     <div className="flex w-full items-center justify-between">
@@ -60,5 +61,5 @@ export default function ThemeToggle() {
         </SelectContent>
       </Select>
     </div>
-  );
+  )
 }

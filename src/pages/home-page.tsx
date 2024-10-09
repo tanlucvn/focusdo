@@ -1,5 +1,5 @@
-import AppMenu from "@/components/app-menu";
-import AppTabs from "@/components/app-tabs";
+import AppMenu from "@/components/app-menu"
+import AppTabs from "@/components/app-tabs"
 
 export default function HomePage() {
   return (
@@ -22,5 +22,5 @@ export default function HomePage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
