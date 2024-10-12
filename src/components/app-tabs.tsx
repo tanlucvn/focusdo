@@ -2,6 +2,8 @@ import { LayoutList, ListChecks, PieChartIcon, TrashIcon } from "lucide-react"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+import TodoList from "./tabs/todo-list"
+
 const AppTabs = () => {
   return (
     <Tabs defaultValue="todos">
@@ -19,7 +21,7 @@ const AppTabs = () => {
           <PieChartIcon size={16} />
         </TabsTrigger>
         <TabsContent value="todos" className="col-span-full">
-          Todos
+          <TodoList />
         </TabsContent>
         <TabsContent value="completed" className="col-span-full">
           Completed
