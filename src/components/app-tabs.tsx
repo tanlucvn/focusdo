@@ -2,6 +2,8 @@ import { LayoutList, ListChecks, PieChartIcon, TrashIcon } from "lucide-react"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+import TodoComplete from "./tabs/todo-complete"
+import TodoDelete from "./tabs/todo-delete"
 import TodoList from "./tabs/todo-list"
 
 const AppTabs = () => {
@@ -24,10 +26,10 @@ const AppTabs = () => {
           <TodoList />
         </TabsContent>
         <TabsContent value="completed" className="col-span-full">
-          Completed
+          <TodoComplete />
         </TabsContent>
         <TabsContent value="trash" className="col-span-full">
-          Trash
+          <TodoDelete />
         </TabsContent>
         <TabsContent value="progress" className="col-span-full">
           Progress

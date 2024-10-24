@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <EvoluProvider value={evolu}>
         <div className={cn("font-sans antialiased")} suppressHydrationWarning>
-          <Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
             <Component {...pageProps} />
           </Suspense>
         </div>

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { todoQuery } from "@/services/query"
+import { todoDeleteQuery } from "@/services/query"
 import { useEvolu, useQuery } from "@evolu/react"
 
 import { Button } from "@/components/ui/button"
@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { TodoItem } from "@/components/todo-item"
 
-export default function TodoList() {
-  const { rows } = useQuery(todoQuery)
+export default function TodoDelete() {
+  const { rows } = useQuery(todoDeleteQuery)
   const { create } = useEvolu()
   const [todoInput, setTodoInput] = useState<string>("")
 
@@ -25,7 +25,7 @@ export default function TodoList() {
     <div className="flex  flex-col">
       <div className="relative flex flex-col">
         <div className="flex h-12 items-center justify-between border-b-2">
-          <h1 className="text-lg font-bold">Todos</h1>
+          <h1 className="text-lg font-bold">Deleted</h1>
         </div>
         <ScrollArea className="flex h-[63dvh] flex-col">
           <div className="p-4">
