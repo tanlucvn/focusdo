@@ -2,6 +2,7 @@ import type { AppProps } from "next/app"
 
 import "@/styles/globals.css"
 
+import { Suspense } from "react"
 import { evolu } from "@/services/evolu/client"
 import { EvoluProvider } from "@evolu/react"
 
@@ -18,7 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <EvoluProvider value={evolu}>
         <div className={cn("font-sans antialiased")} suppressHydrationWarning>
-          <Component {...pageProps} />
+          <Suspense>
+            <Component {...pageProps} />
+          </Suspense>
         </div>
       </EvoluProvider>
     </ThemeProvider>
