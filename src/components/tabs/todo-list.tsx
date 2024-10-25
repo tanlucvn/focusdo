@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { TodoItem } from "@/components/todo-item"
 
+import NewTodoModal from "../new-todo-modal"
+
 export default function TodoList() {
   const { rows } = useQuery(todoQuery)
   const { create } = useEvolu()
@@ -44,6 +46,7 @@ export default function TodoList() {
             placeholder="I want to..."
             className="rounded-full text-foreground"
           />
+          <NewTodoModal />
         </div>
         <Button className="rounded-full" onClick={handleAddTodo}>
           Add

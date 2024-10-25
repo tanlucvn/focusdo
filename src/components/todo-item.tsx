@@ -2,23 +2,81 @@ import { memo, useState } from "react"
 import { Database } from "@/services/evolu/database"
 import { TodoRow } from "@/services/query"
 import { useEvolu } from "@evolu/react"
+import {
+  format,
+  formatDistanceToNow,
+  isThisWeek,
+  isToday,
+  isTomorrow,
+} from "date-fns"
 import { motion } from "framer-motion"
-import { RotateCcwIcon, TrashIcon } from "lucide-react"
+import {
+  ArrowUpWideNarrowIcon,
+  CalendarIcon,
+  EditIcon,
+  MapPinIcon,
+  MoreHorizontalIcon,
+  PencilLineIcon,
+  PinIcon,
+  TrashIcon,
+  Undo2Icon,
+} from "lucide-react"
 
 import { iconSize } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/components/ui/checkbox"
 
-import { Button } from "./ui/button"
+import { Badge } from "./ui/badge"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 
 const toBoolean = (value: 0 | 1 | null): boolean => value === 1
 
 export const TodoItem = memo<{
   row: TodoRow
-}>(function TodoItem({ row: { id, title, isComplete, isDeleted, remindAt } }) {
+}>(function TodoItem({
+  row: {
+    id,
+    title,
+    note,
+    priority,
+    isComplete,
+    isDeleted,
+    isPin,
+    remindAt,
+    location,
+  },
+}) {
   const { update } = useEvolu<Database>()
+  const [isPinned, setIsPinned] = useState<boolean>(toBoolean(isPin))
   const [isChecked, setIsChecked] = useState<boolean>(toBoolean(isComplete))
   const delayTime = 500
+
+  const isRemindDatePassed =
+    remindAt !== null &&
+    new Date(remindAt) < new Date() &&
+    !isToday(new Date(remindAt))
+
+  const formatRemindDate = (remindDate: Date) => {
+    if (isToday(remindDate)) {
+      return "today"
+    } else if (isRemindDatePassed) {
+      return formatDistanceToNow(new Date(remindAt), {
+        addSuffix: true,
+      })
+    } else if (isTomorrow(remindDate)) {
+      return "tomorrow"
+    } else if (isThisWeek(remindDate)) {
+      return format(remindDate, "EEEE")
+    } else {
+      return format(remindDate, "dd/MM/yyyy")
+    }
+  }
 
   const handleToggleCompletedClick = () => {
     setIsChecked(!isChecked)
@@ -36,11 +94,17 @@ export const TodoItem = memo<{
     update("todo", { id, isDeleted: !isDeleted })
   }
 
+  const handlePinnedClick = () => {
+    setIsPinned(!isPinned)
+    update("todo", { id, isPin: !isPin })
+  }
+  console.log("remindAt", remindAt)
   return (
     <motion.div
       key={id}
       className={cn(
-        "mb-2 flex shrink-0 justify-between text-clip rounded-xl border p-3"
+        "mb-2 flex shrink-0 justify-between text-clip rounded-xl border p-3",
+        isPinned && !toBoolean(isComplete) && "bg-secondary"
       )}
       initial={{ opacity: 0, x: 0 }}
       animate={{
@@ -57,31 +121,149 @@ export const TodoItem = memo<{
           name="todo"
         />
         <div className="flex flex-auto flex-col gap-2">
-          <p className={cn("flex-auto leading-none text-foreground")} key={id}>
+          <p
+            className={cn(
+              "flex-auto leading-none text-foreground",
+              isChecked && "text-foreground/80 line-through",
+              toBoolean(isDeleted) && "text-foreground/50"
+            )}
+            key={id}
+          >
             {title}
-
-            {/* Debug */}
-            {toBoolean(isComplete).toString()}
           </p>
+
+          {/* Note */}
+          {!toBoolean(isComplete) && !toBoolean(isDeleted) && title && (
+            <div className="text-[10px] leading-none text-foreground/70">
+              {note && note.length < 20
+                ? note
+                : note && note.slice(0, 20) + "..."}
+            </div>
+          )}
+
+          {(note ||
+            toBoolean(isPin) ||
+            location ||
+            remindAt ||
+            priority !== "none") &&
+            !toBoolean(isComplete) &&
+            !toBoolean(isDeleted) && (
+              <div className="flex justify-between">
+                <div className="flex items-center gap-2">
+                  {remindAt && (
+                    <div
+                      className={cn(
+                        "flex items-center gap-1 text-xs leading-none text-foreground/70",
+                        isRemindDatePassed && "text-red-500"
+                      )}
+                    >
+                      <CalendarIcon size={iconSize} />
+                      <p className="text-[10px]">
+                        {formatRemindDate(new Date(remindAt))}
+                      </p>
+                    </div>
+                  )}
+                  {toBoolean(isPin) && (
+                    <div className="flex items-center gap-1 text-xs leading-none text-foreground/70">
+                      <PinIcon size={iconSize} />
+                    </div>
+                  )}
+                  {note && (
+                    <div className="flex items-center gap-1 text-xs leading-none text-foreground/70">
+                      <PencilLineIcon size={iconSize} />
+                    </div>
+                  )}
+                  {location && (
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <div className="flex items-center gap-1 text-xs leading-none text-foreground/70">
+                          <MapPinIcon size={iconSize} />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{location}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                  {priority !== "none" && (
+                    <div className="flex items-center gap-1 text-xs leading-none text-foreground/70">
+                      <ArrowUpWideNarrowIcon size={iconSize} />
+                    </div>
+                  )}
+                </div>
+                {priority && priority !== "none" && (
+                  <Badge
+                    className={cn(
+                      "rounded-full px-2 py-1 text-[10px] font-semibold",
+                      priority === "low" &&
+                        "bg-yellow-400/20 text-yellow-500 hover:bg-yellow-400/10",
+                      priority === "medium" &&
+                        "bg-orange-400/20 text-orange-500 hover:bg-orange-400/10",
+                      priority === "high" &&
+                        "bg-red-400/20 text-red-500 hover:bg-red-400/10"
+                    )}
+                  >
+                    {priority}
+                  </Badge>
+                )}
+              </div>
+            )}
         </div>
       </div>
-      {!toBoolean(isDeleted) ? (
-        <Button
-          size="icon"
-          variant="outline"
-          onClick={() => handleDeletedClick()}
-        >
-          <TrashIcon size={iconSize} />
-        </Button>
-      ) : (
-        <Button
-          size="icon"
-          variant="outline"
-          onClick={() => handleRestoreClick()}
-        >
-          <RotateCcwIcon size={iconSize} />
-        </Button>
-      )}
+
+      <DropdownMenu>
+        <DropdownMenuTrigger className="flex-initial self-start">
+          <div className="px-2">
+            <MoreHorizontalIcon size={iconSize} />
+          </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="flex w-fit flex-col rounded-xl">
+          <DropdownMenuItem
+            className={cn(
+              "flex gap-2",
+              (isChecked || toBoolean(isDeleted)) && "hidden"
+            )}
+            onClick={() => handlePinnedClick()}
+          >
+            <PinIcon
+              size={iconSize}
+              className={cn(isPinned && "fill-current")}
+            />
+            <p>{isPinned ? "Unpin" : "Pin"}</p>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className={cn(
+              "flex gap-2",
+              (isChecked || toBoolean(isDeleted)) && "hidden"
+            )}
+            onClick={() => {}}
+          >
+            <EditIcon size={iconSize} />
+            <p>Edit</p>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className={cn("hidden", toBoolean(isDeleted) && "flex gap-2")}
+            onClick={() => handleRestoreClick()}
+          >
+            <Undo2Icon size={iconSize} />
+            <p>Restore</p>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className={cn("flex gap-2", toBoolean(isDeleted) && "hidden")}
+            onClick={() => handleDeletedClick()}
+          >
+            <TrashIcon size={iconSize} />
+            <p>Move to trash</p>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className={cn("flex gap-2", !toBoolean(isDeleted) && "hidden")}
+            onClick={() => {}}
+          >
+            <TrashIcon size={iconSize} />
+            <p>Delete</p>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </motion.div>
   )
 })

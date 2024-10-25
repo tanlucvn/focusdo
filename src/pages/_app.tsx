@@ -7,6 +7,7 @@ import { evolu } from "@/services/evolu/client"
 import { EvoluProvider } from "@evolu/react"
 
 import { cn } from "@/lib/utils"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -17,13 +18,15 @@ export default function App({ Component, pageProps }: AppProps) {
       enableSystem
       disableTransitionOnChange
     >
-      <EvoluProvider value={evolu}>
-        <div className={cn("font-sans antialiased")} suppressHydrationWarning>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Component {...pageProps} />
-          </Suspense>
-        </div>
-      </EvoluProvider>
+      <TooltipProvider>
+        <EvoluProvider value={evolu}>
+          <div className={cn("font-sans antialiased")} suppressHydrationWarning>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Component {...pageProps} />
+            </Suspense>
+          </div>
+        </EvoluProvider>
+      </TooltipProvider>
     </ThemeProvider>
   )
 }
