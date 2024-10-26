@@ -23,7 +23,7 @@ import {
 } from "lucide-react"
 
 import { iconSize } from "@/lib/constants"
-import { cn } from "@/lib/utils"
+import { cn, toBoolean } from "@/lib/utils"
 import { Checkbox } from "@/components/ui/checkbox"
 
 import { Badge } from "./ui/badge"
@@ -34,8 +34,6 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
-
-const toBoolean = (value: 0 | 1 | null): boolean => value === 1
 
 export const TodoItem = memo<{
   row: TodoRow
