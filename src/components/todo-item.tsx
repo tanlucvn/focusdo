@@ -48,6 +48,7 @@ export const TodoItem = memo<{
     isPin,
     remindAt,
     location,
+    createdAt,
   },
 }) {
   const { update } = useEvolu<Database>()
@@ -128,6 +129,9 @@ export const TodoItem = memo<{
             key={id}
           >
             {title}
+
+            {/*  Debug for sort */}
+            {/* {format(createdAt, "dd/MM/yyyy HH:mm")} */}
           </p>
 
           {/* Note */}
