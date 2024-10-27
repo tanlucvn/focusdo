@@ -8,6 +8,7 @@ import { EvoluProvider } from "@evolu/react"
 
 import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import Loading from "@/components/loading"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -21,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <TooltipProvider>
         <EvoluProvider value={evolu}>
           <div className={cn("font-sans antialiased")} suppressHydrationWarning>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loading />}>
               <Component {...pageProps} />
             </Suspense>
           </div>
