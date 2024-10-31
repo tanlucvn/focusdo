@@ -1,3 +1,4 @@
+import { evolu } from "@/services/evolu/client"
 import {
   ArrowUpRightIcon,
   MenuIcon,
@@ -22,6 +23,12 @@ import AppLogo from "./app-logo"
 import ThemeSettings from "./settings/theme-settings"
 
 const Menu = () => {
+  const handleResetOwnerClick = () => {
+    if (confirm("Are you sure? It will delete all your local data.")) {
+      evolu.resetOwner()
+    }
+  }
+
   return (
     <div className="flex w-full items-center justify-between px-5">
       <AppHeader />
@@ -74,7 +81,10 @@ const Menu = () => {
                   </AccordionItem>
                 </Accordion>
               </div>
-              <Button className="flex w-full items-center justify-center space-x-3  rounded-2xl px-6  py-4 font-medium transition-colors">
+              <Button
+                onClick={handleResetOwnerClick}
+                className="flex w-full items-center justify-center space-x-3 rounded-2xl px-6 py-4 font-medium transition-colors"
+              >
                 <TrashIcon size={iconSize} />
                 <p>Delete data</p>
               </Button>
