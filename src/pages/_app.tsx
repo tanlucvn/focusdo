@@ -6,6 +6,7 @@ import { Suspense } from "react"
 import { evolu } from "@/services/evolu/client"
 import { EvoluProvider } from "@evolu/react"
 
+import FocusdoProvider from "@/lib/providers/focusdo"
 import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import Loading from "@/components/loading"
@@ -21,11 +22,16 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <TooltipProvider>
         <EvoluProvider value={evolu}>
-          <div className={cn("font-sans antialiased")} suppressHydrationWarning>
-            <Suspense fallback={<Loading />}>
-              <Component {...pageProps} />
-            </Suspense>
-          </div>
+          <FocusdoProvider>
+            <div
+              className={cn("font-sans antialiased")}
+              suppressHydrationWarning
+            >
+              <Suspense fallback={<Loading />}>
+                <Component {...pageProps} />
+              </Suspense>
+            </div>
+          </FocusdoProvider>
         </EvoluProvider>
       </TooltipProvider>
     </ThemeProvider>

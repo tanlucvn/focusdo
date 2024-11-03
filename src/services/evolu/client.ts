@@ -5,6 +5,7 @@ import { createEvolu, createIndexes, SqliteBoolean } from "@evolu/react"
 
 const indexes = createIndexes((create) => [
   create("indexTodoCreatedAt").on("todo").column("createdAt"),
+  create("indexSettingsCreatedAt").on("settings").column("createdAt"),
 ])
 
 export const evolu = createEvolu(Database, {
@@ -30,6 +31,10 @@ export const evolu = createEvolu(Database, {
       isPin: S.decodeSync(SqliteBoolean)(0),
       deletedAt: S.decodeSync(S.NullOr(SqliteDateTime))(null),
       remindAt: S.decodeSync(S.NullOr(SqliteDateTime))(null),
+    })
+
+    evolu.create("settings", {
+      appColor: S.decodeSync(NonEmptyString100)("neutral"),
     })
   },
 })

@@ -39,3 +39,18 @@ export const TodoTable = table({
   remindAt: S.NullOr(SqliteDateTime),
 })
 export type TodoTable = typeof TodoTable.Type
+
+// SETTINGS SCHEMA
+export const AppColorType = S.Enums({
+  neutral: "neutral",
+  blue: "blue",
+})
+
+export const SettingsId = id("Settings")
+export type SettingsId = typeof SettingsId.Type
+
+export const SettingsTable = table({
+  id: SettingsId,
+  appColor: S.NullOr(AppColorType),
+})
+export type SettingsTable = typeof SettingsTable.Type

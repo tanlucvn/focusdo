@@ -1,8 +1,9 @@
 import { database } from "@evolu/react"
 
-import { TodoTable } from "./schema"
+import { SettingsTable, TodoTable } from "./schema"
 
 export const Database = database({
   todo: TodoTable,
+  settings: SettingsTable,
 })
 export type Database = typeof Database.Type

@@ -85,3 +85,10 @@ export const todoDeleteQuery = evolu.createQuery((db) =>
 )
 
 export type TodoRow = ExtractRow<typeof todoQuery>
+
+// SETTINGS QUERY
+export const settingsQuery = evolu.createQuery((db) =>
+  db.selectFrom("settings").select(["appColor"])
+)
+
+export type SettingsRow = ExtractRow<typeof settingsQuery>
