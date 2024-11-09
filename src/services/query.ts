@@ -56,6 +56,7 @@ export const todoCompletedQuery = evolu.createQuery((db) =>
       "location",
       "remindAt",
       "isDeleted",
+      "createdAt",
     ])
     .where("title", "is not", null)
     .where("isComplete", "is", cast(true))
