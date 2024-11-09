@@ -43,7 +43,13 @@ export type TodoTable = typeof TodoTable.Type
 // SETTINGS SCHEMA
 export const AppColorType = S.Enums({
   neutral: "neutral",
-  blue: "blue",
+  zinc: "zinc",
+  stone: "stone",
+})
+
+export const CheckBoxType = S.Enums({
+  square: "square",
+  circle: "circle",
 })
 
 export const SettingsId = id("Settings")
@@ -52,5 +58,6 @@ export type SettingsId = typeof SettingsId.Type
 export const SettingsTable = table({
   id: SettingsId,
   appColor: S.NullOr(AppColorType),
+  checkBoxType: S.NullOr(CheckBoxType),
 })
 export type SettingsTable = typeof SettingsTable.Type

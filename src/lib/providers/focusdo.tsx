@@ -1,4 +1,5 @@
 import { createContext, useState, type ReactNode } from "react"
+import { SettingsId } from "@/services/evolu/schema"
 import { settingsQuery, SettingsRow } from "@/services/query"
 import { useQuery } from "@evolu/react"
 
@@ -12,7 +13,9 @@ export const FocusdoContext = createContext<FocusdoProviderData>({
   focusMode: false,
   setFocusMode: () => {},
   settings: {
+    id: "" as SettingsId,
     appColor: null,
+    checkBoxType: null,
   },
 })
 

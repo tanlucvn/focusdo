@@ -15,7 +15,7 @@ export default function AppHeader() {
     >
       <div className={"flex items-center gap-2"}>
         <AppLogo />
-        <span className={"font-semibold"}>FocusDo</span>
+        <span className={"font-semibold"}>Focusdo</span>
         <span className={"hidden text-muted-foreground sm:block"}>
           Minimal todo application
         </span>

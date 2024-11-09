@@ -1,3 +1,4 @@
+import { useContext } from "react"
 import { evolu } from "@/services/evolu/client"
 import {
   ArrowUpRightIcon,
@@ -5,9 +6,11 @@ import {
   PaletteIcon,
   StickyNoteIcon,
   TrashIcon,
+  WrenchIcon,
 } from "lucide-react"
 
 import { appVersion, iconSize } from "@/lib/constants"
+import { FocusdoContext } from "@/lib/providers/focusdo"
 import {
   Accordion,
   AccordionContent,
@@ -17,12 +20,15 @@ import {
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import AppHeader from "@/components/app-header"
+import AppLogo from "@/components/app-logo"
+import AppearanceMenu from "@/components/menu/appearance-menu"
 
-import AppHeader from "./app-header"
-import AppLogo from "./app-logo"
-import ThemeSettings from "./settings/theme-settings"
+import AdvancedMenu from "./menu/advanced-menu"
+import { FocusDoContent, FocusDoModal, FocusDoTrigger } from "./ui/custom/modal"
 
 const Menu = () => {
+  const { settings } = useContext(FocusdoContext)
   const handleResetOwnerClick = () => {
     if (confirm("Are you sure? It will delete all your local data.")) {
       evolu.resetOwner()
@@ -33,15 +39,15 @@ const Menu = () => {
     <div className="flex w-full items-center justify-between px-5">
       <AppHeader />
 
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button size="icon">
+      <FocusDoModal>
+        <FocusDoTrigger asChild>
+          <Button size="icon" className="rounded-lg">
             <MenuIcon size={iconSize} />
           </Button>
-        </DialogTrigger>
-        <DialogContent className="h-[505px] bg-secondary px-4 sm:rounded-3xl">
+        </FocusDoTrigger>
+        <FocusDoContent className="h-[505px] bg-secondary px-4 sm:rounded-3xl">
           <ScrollArea className="rounded-3xl py-3">
-            <div className="flex flex-col items-center space-y-6 py-2">
+            <div className="flex flex-col items-center space-y-6 px-4 py-2">
               <div className="flex w-full items-center justify-start gap-4 rounded-3xl bg-background p-3 font-medium">
                 <div className="grid size-20 place-items-center text-clip rounded-full border-2">
                   <AppLogo />
@@ -76,7 +82,18 @@ const Menu = () => {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <ThemeSettings />
+                      <AppearanceMenu settings={settings} />
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-2" className="w-full">
+                    <AccordionTrigger>
+                      <div className="flex items-center space-x-3">
+                        <WrenchIcon size={18} />
+                        <p>Advanced</p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <AdvancedMenu settings={settings} />
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
@@ -90,8 +107,8 @@ const Menu = () => {
               </Button>
             </div>
           </ScrollArea>
-        </DialogContent>
-      </Dialog>
+        </FocusDoContent>
+      </FocusDoModal>
     </div>
   )
 }

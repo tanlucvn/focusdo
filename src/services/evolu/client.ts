@@ -35,6 +35,7 @@ export const evolu = createEvolu(Database, {
 
     evolu.create("settings", {
       appColor: S.decodeSync(NonEmptyString100)("neutral"),
+      checkBoxType: S.decodeSync(NonEmptyString100)("square"),
     })
   },
 })

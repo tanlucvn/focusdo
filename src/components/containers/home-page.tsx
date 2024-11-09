@@ -1,7 +1,20 @@
+import { useContext, useEffect } from "react"
+import { useTheme } from "next-themes"
+
+import { FocusdoContext } from "@/lib/providers/focusdo"
 import AppMenu from "@/components/app-menu"
 import AppTabs from "@/components/app-tabs"
 
 export default function HomePage() {
+  const { theme } = useTheme()
+  const { settings } = useContext(FocusdoContext)
+
+  useEffect(() => {
+    if (settings) {
+      document.documentElement.className = `${settings.appColor} ${theme}`
+    }
+  }, [settings, theme])
+
   return (
     <div className="relative flex h-dvh items-center justify-center">
       <div className="container pointer-events-none absolute left-1/2 top-0 z-0 h-full -translate-x-1/2">
