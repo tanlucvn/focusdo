@@ -14,6 +14,7 @@ export const allTodoQuery = evolu.createQuery((db) =>
       "location",
       "remindAt",
       "isDeleted",
+      "createdAt",
     ])
     .where("title", "is not", null)
     .where("isDeleted", "is not", cast(true))
@@ -78,6 +79,7 @@ export const todoDeleteQuery = evolu.createQuery((db) =>
       "location",
       "remindAt",
       "isDeleted",
+      "createdAt",
     ])
     .where("title", "is not", null)
     .where("isDeleted", "is", cast(true))
